@@ -8,25 +8,25 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DeliveryEmployeeDao {
+public class EmployeeDao {
 
      DatabaseConnector databaseConnector = new DatabaseConnector();
     public List<Employee> getAllDeliveryEmployees() throws SQLException {
         Connection c = databaseConnector.getConnection();
         Statement st = c.createStatement();
 
-        ResultSet rs = st.executeQuery("SELECT `delivery_employee_id`," +
+        ResultSet rs = st.executeQuery("SELECT `employee_id`," +
                 "`name`," +
                 "`salary`," +
                 "`bank_account_number`," +
                 "`national_insurance_number`" +
-                "FROM `DeliveryEmployee`;");
+                "FROM `Employee`;");
 
         List<Employee> emoloyeeList = new ArrayList<>();
 
         while (rs.next()) {
             Employee employee = new Employee(
-                    rs.getInt("delivery_employee_id"),
+                    rs.getInt("employee_id"),
                     rs.getString("name"),
                     rs.getDouble("salary"),
                     rs.getString("bank_account_number"),
@@ -41,7 +41,7 @@ public class DeliveryEmployeeDao {
     public int createDeliveryEmployee(DeliveryEmployeeRequest employee) throws SQLException{
         Connection c = databaseConnector.getConnection();
 
-        String insertStatement = "INSERT INTO `DeliveryEmployee` (`name`, `salary`, `bank_account_number`, `national_insurance_number`) VALUES (?,?,?,?)";
+        String insertStatement = "INSERT INTO `Employee` (`name`, `salary`, `bank_account_number`, `national_insurance_number`) VALUES (?,?,?,?)";
 
         PreparedStatement st = c.prepareStatement(insertStatement, Statement. RETURN_GENERATED_KEYS);
 
@@ -66,7 +66,7 @@ public class DeliveryEmployeeDao {
 
         c.setAutoCommit(false);
 
-        String insertStatement = "INSERT INTO `DeliveryEmployeeProject` (`project_id`, `delivery_employee_id`, `is_Active`, `created_On`, `updated_On`) VALUES (?,?,?,?,?)";
+        String insertStatement = "INSERT INTO `Delivery_EmployeeProject` (`project_id`, `employee_id`, `is_Active`, `created_On`, `updated_On`) VALUES (?,?,?,?,?)";
         PreparedStatement st = c.prepareStatement(insertStatement, Statement. RETURN_GENERATED_KEYS);
 
         for(DeliveryEmployeeProjectRequest request : requests){
@@ -88,8 +88,8 @@ public class DeliveryEmployeeDao {
         Connection c = databaseConnector.getConnection();
 
         Statement st = c.createStatement();
-        ResultSet rs = st.executeQuery("SELECT delivery_employee_id"  +
-                " FROM `DeliveryEmployee` where delivery_employee_id=" + employeeId);
+        ResultSet rs = st.executeQuery("SELECT employee_id"  +
+                " FROM `Employee` where employee_id=" + employeeId);
 
         if(rs.next())
         {
@@ -102,7 +102,7 @@ public class DeliveryEmployeeDao {
 
         Connection c = databaseConnector.getConnection();
 
-        String deleteStatement = "DELETE from DeliveryEmployee WHERE delivery_employee_id = ? ";
+        String deleteStatement = "DELETE from Employee WHERE employee_id = ? ";
 
         PreparedStatement st = c.prepareStatement(deleteStatement);
 
@@ -113,7 +113,7 @@ public class DeliveryEmployeeDao {
 
     public Employee getDeliveryEmployeeById(int id) throws SQLException {
         Connection c = databaseConnector.getConnection();
-        String selectStatement  = "SELECT delivery_employee_id, `name`, salary, bank_account_number, national_insurance_number FROM DeliveryEmployee WHERE delivery_employee_id = ?;";
+        String selectStatement  = "SELECT employee_id, `name`, salary, bank_account_number, national_insurance_number FROM Employee WHERE employee_id = ?;";
 
         PreparedStatement st = c.prepareStatement(selectStatement);
 
@@ -123,7 +123,7 @@ public class DeliveryEmployeeDao {
 
         while(rs.next()) {
             return new Employee(
-                    rs.getInt("delivery_employee_id"),
+                    rs.getInt("employee_id"),
                     rs.getString("name"),
                     rs.getDouble("salary"),
                     rs.getString("bank_account_number"),
