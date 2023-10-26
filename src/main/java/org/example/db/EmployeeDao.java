@@ -1,6 +1,6 @@
 package org.example.db;
 
-import org.example.cli.DeliveryEmployee;
+import org.example.cli.Employee;
 import org.example.cli.DeliveryEmployeeProjectRequest;
 import org.example.cli.DeliveryEmployeeRequest;
 
@@ -11,7 +11,7 @@ import java.util.List;
 public class DeliveryEmployeeDao {
 
      DatabaseConnector databaseConnector = new DatabaseConnector();
-    public List<DeliveryEmployee> getAllDeliveryEmployees() throws SQLException {
+    public List<Employee> getAllDeliveryEmployees() throws SQLException {
         Connection c = databaseConnector.getConnection();
         Statement st = c.createStatement();
 
@@ -22,10 +22,10 @@ public class DeliveryEmployeeDao {
                 "`national_insurance_number`" +
                 "FROM `DeliveryEmployee`;");
 
-        List<DeliveryEmployee> emoloyeeList = new ArrayList<>();
+        List<Employee> emoloyeeList = new ArrayList<>();
 
         while (rs.next()) {
-            DeliveryEmployee employee = new DeliveryEmployee(
+            Employee employee = new Employee(
                     rs.getInt("delivery_employee_id"),
                     rs.getString("name"),
                     rs.getDouble("salary"),
@@ -111,7 +111,7 @@ public class DeliveryEmployeeDao {
         st.executeUpdate();
     }
 
-    public DeliveryEmployee getDeliveryEmployeeById(int id) throws SQLException {
+    public Employee getDeliveryEmployeeById(int id) throws SQLException {
         Connection c = databaseConnector.getConnection();
         String selectStatement  = "SELECT delivery_employee_id, `name`, salary, bank_account_number, national_insurance_number FROM DeliveryEmployee WHERE delivery_employee_id = ?;";
 
@@ -122,7 +122,7 @@ public class DeliveryEmployeeDao {
         ResultSet rs = st.executeQuery();
 
         while(rs.next()) {
-            return new DeliveryEmployee(
+            return new Employee(
                     rs.getInt("delivery_employee_id"),
                     rs.getString("name"),
                     rs.getDouble("salary"),
