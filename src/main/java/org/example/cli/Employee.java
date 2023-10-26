@@ -1,26 +1,26 @@
 package org.example.cli;
 
-public class DeliveryEmployee {
-    private int delivery_employee_id;
+public class Employee {
+    private int employee_id;
     private String name;
     private double salary;
     private String bank_account_number;
     private String national_insurance_number;
 
-    public DeliveryEmployee(int delivery_employee_id, String name, double salary, String bank_account_number, String national_insurance_number) {
-        this.delivery_employee_id = delivery_employee_id;
+    public Employee(int employee_id, String name, double salary, String bank_account_number, String national_insurance_number) {
+        this.employee_id = employee_id;
         this.name = name;
         this.salary = salary;
         this.bank_account_number = bank_account_number;
         this.national_insurance_number = national_insurance_number;
     }
 
-    public int getDelivery_employee_id() {
-        return delivery_employee_id;
+    public int getEmployee_id() {
+        return employee_id;
     }
 
-    public void setDelivery_employee_id(int delivery_employee_id) {
-        this.delivery_employee_id = delivery_employee_id;
+    public void setEmployee_id(int employee_id) {
+        this.employee_id = employee_id;
     }
 
     public String getName() {

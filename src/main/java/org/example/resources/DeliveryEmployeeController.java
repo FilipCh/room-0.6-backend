@@ -1,8 +1,7 @@
 package org.example.resources;
 
 import io.swagger.annotations.Api;
-import org.example.api.DeliveryEmployeeService;
-import org.example.cli.DeliveryEmployee;
+import org.example.api.EmployeeService;
 import org.example.cli.DeliveryEmployeeProjectRequest;
 import org.example.cli.DeliveryEmployeeRequest;
 import org.example.client.DeliveryEmployeeDoesNotExistException;
@@ -19,7 +18,7 @@ import java.util.List;
 @Api("Delivery Employee API")
 @Path("/api")
 public class DeliveryEmployeeController {
-    DeliveryEmployeeService deliveryEmployeeService = new DeliveryEmployeeService();
+    EmployeeService deliveryEmployeeService = new EmployeeService();
     @GET
     @Path("/deliveryEmployees")
     @Produces(MediaType.APPLICATION_JSON)
