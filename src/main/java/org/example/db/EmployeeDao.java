@@ -3,6 +3,7 @@ package org.example.db;
 import org.example.cli.Employee;
 import org.example.cli.DeliveryEmployeeProjectRequest;
 import org.example.cli.DeliveryEmployeeRequest;
+import org.example.cli.UpdateDeliveryEmployeeRequest;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -131,6 +132,20 @@ public class EmployeeDao {
             );
         }
         return null;
+    }
+    public void updateDeliveryEmployee(int id, UpdateDeliveryEmployeeRequest deliveryEmployee) throws SQLException {
+        Connection c = databaseConnector.getConnection();
+
+        String updateStatement = "UPDATE `Employee` SET `name` = ?, `salary` = ?, `bank_account_number` = ? WHERE `employee_id` = ?;";
+
+        PreparedStatement st = c.prepareStatement(updateStatement);
+
+        st.setString(1, deliveryEmployee.getName());
+        st.setDouble(2, deliveryEmployee.getSalary());
+        st.setString(3, deliveryEmployee.getBank_account_number());
+        st.setInt(4, id);
+
+        st.executeUpdate();
     }
 }
 

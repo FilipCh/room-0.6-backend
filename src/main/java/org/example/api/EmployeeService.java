@@ -3,8 +3,10 @@ package org.example.api;
 import org.example.cli.Employee;
 import org.example.cli.DeliveryEmployeeProjectRequest;
 import org.example.cli.DeliveryEmployeeRequest;
+import org.example.cli.UpdateDeliveryEmployeeRequest;
 import org.example.client.DeliveryEmployeeDoesNotExistException;
 import org.example.client.FailedToDeleteEmployeeException;
+import org.example.client.FailedToUpdateDeliveryEmployeeException;
 import org.example.client.ProjectException;
 import org.example.core.DeliveryEmployeeValidator;
 import org.example.db.EmployeeDao;
@@ -72,6 +74,21 @@ public class EmployeeService {
             System.err.println(e.getMessage());
             throw new FailedToDeleteEmployeeException();
         }
+    }
+    public void updateDeliveryEmployee(int id, UpdateDeliveryEmployeeRequest deliveryEmployee) throws ProjectException, SQLException, DeliveryEmployeeDoesNotExistException, FailedToUpdateDeliveryEmployeeException {
+        String validation = deliveryEmployeeValidator.isValidUpdate(deliveryEmployee);
+
+        if (validation != null) {
+            throw new ProjectException();
+        }
+
+        Employee deliveryEmployeeToUpdate = employeeDao.getDeliveryEmployeeById(id);
+
+        if (deliveryEmployeeToUpdate == null) {
+            throw new DeliveryEmployeeDoesNotExistException();
+        }
+
+        employeeDao.updateDeliveryEmployee(id, deliveryEmployee);
     }
 
 }
