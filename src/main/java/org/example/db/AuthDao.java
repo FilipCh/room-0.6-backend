@@ -1,6 +1,7 @@
 package org.example.db;
 
 import org.apache.commons.lang3.time.DateUtils;
+import org.example.cli.Employee;
 import org.example.cli.Login;
 
 import java.sql.*;
@@ -12,8 +13,13 @@ public class AuthDao {
 
     public boolean validlogin(Login login) {
         try (Connection c = databaseConnector.getConnection()) {
-            Statement st = c.createStatement();
-            ResultSet rs = st.executeQuery("SELECT `Password` FROM `User` where `Username` = " + "'" + login.getUsername() + "'");
+
+            String selectStatement = "SELECT `Password` FROM `User` where `Username` = " + "'" + login.getUsername() + "'";
+
+            PreparedStatement st = c.prepareStatement(selectStatement);
+
+            ResultSet rs = st.executeQuery();
+
             while (rs.next()) {
                 return rs.getString("password").equals(login.getPassword());
             }
@@ -21,6 +27,7 @@ public class AuthDao {
             System.err.println(e.getMessage());
         }
         return false;
+
     }
 
     public String generateToken(String username) throws SQLException {
