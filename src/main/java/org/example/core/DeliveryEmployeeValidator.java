@@ -1,6 +1,7 @@
 package org.example.core;
 
 import org.example.cli.DeliveryEmployeeRequest;
+import org.example.cli.UpdateDeliveryEmployeeRequest;
 
 public class DeliveryEmployeeValidator {
     public String isValid(DeliveryEmployeeRequest employee){
@@ -11,6 +12,13 @@ public class DeliveryEmployeeValidator {
         {
             return "Error in NIN";
         }
+        return null;
+    }
+    public String isValidUpdate(UpdateDeliveryEmployeeRequest employee) {
+        if(employee.getBank_account_number().length() != 8){
+            return "Bank account not of right length";
+        }
+
         return null;
     }
 }
