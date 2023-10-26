@@ -14,9 +14,12 @@ public class AuthDao {
     public boolean validlogin(Login login) {
         try (Connection c = databaseConnector.getConnection()) {
 
-            String selectStatement = "SELECT `Password` FROM `User` where `Username` = " + "'" + login.getUsername() + "'";
+            String selectStatement = "SELECT `Password` FROM `User` where `Username` = ?";
+
 
             PreparedStatement st = c.prepareStatement(selectStatement);
+
+            st.setString(1, login.getUsername());
 
             ResultSet rs = st.executeQuery();
 
